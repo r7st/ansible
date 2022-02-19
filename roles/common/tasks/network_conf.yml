@@ -1,0 +1,29 @@
+- name: Check vars
+  assert:
+    that:
+      - IP is defined
+      - GW is defined
+      - DNS is defined
+- name: Copy grub config
+  copy:
+    src: files/grub
+    dest: /etc/default/grub
+    owner: root
+    group: root
+    mode: 0644
+  register: updated_grub
+- name: Update grub
+  shell: grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda 
+  when: updated_grub.changed
+  notify: Reboot Server
+- name: Remove ens2 config
+  file:
+    path: /etc/sysconfig/network-scripts/ifcfg-ens2
+    state: absent
+- name: Add eth0 config
+  template:
+    src: templates/ifcfg-eth0.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+    owner: root
+    group: root
+    mode: 0644

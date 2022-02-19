@@ -1,0 +1,14 @@
+- name: Create ssh dir
+  file:
+    path: /root/.ssh
+    state: directory
+    mode: 0700
+    owner: root
+    group: root
+- name: Copy authorized_keys
+  copy:
+    src: files/authorized_keys
+    dest: /root/.ssh/authorized_keys
+    mode: 0600
+    owner: root
+    group: root

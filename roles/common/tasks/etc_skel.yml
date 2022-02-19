@@ -1,0 +1,24 @@
+- name: Copy /etc/skel/
+  copy:
+    src: files/{{ item }}
+    dest: /etc/skel/.{{ item }}
+    mode: 0644
+    owner: root
+    group: root
+  loop:
+    - bash_profile
+    - bashrc
+    - bash_logout
+    - hushlogin
+- name: Root dotfiles
+  copy:
+    src: files/{{ item }}
+    dest: /root/.{{ item }}
+    mode: 0644
+    owner: root
+    group: root
+  loop:
+    - bash_profile
+    - bashrc
+    - bash_logout
+    - hushlogin

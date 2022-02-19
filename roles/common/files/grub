@@ -1,0 +1,9 @@
+GRUB_TIMEOUT=2
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL="serial console"
+GRUB_SERIAL_COMMAND="serial --speed=115200"
+GRUB_CMDLINE_LINUX="rhgb quiet crashkernel=auto net.ifnames=0 biosdevname=0 rd.lvm.lv=rl/root console=ttyS0,115200n8"
+GRUB_DISABLE_RECOVERY="true"
+GRUB_ENABLE_BLSCFG=true

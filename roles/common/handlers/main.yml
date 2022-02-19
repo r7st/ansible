@@ -1,0 +1,8 @@
+---
+# handlers file for roles/common
+- name: Reboot Server
+  reboot:
+- name: Restart firewalld
+  systemd:
+    name: firewalld
+    state: reloaded

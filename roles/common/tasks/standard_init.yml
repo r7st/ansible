@@ -1,0 +1,31 @@
+- name: Add epel
+  package: 
+    name: epel-release
+- name: Update System
+  dnf:
+    name: '*'
+    update_cache: yes
+    update_only: yes
+    state: latest
+  tags: update
+- name: Autoremove Unneeded Packages
+  dnf:
+    autoremove: yes
+  tags: update
+- name: Check For Reboot
+  shell: needs-restarting -r || true
+  register: restart_required
+  changed_when: '"Reboot is required" in restart_required.stdout'
+  notify: Reboot Server
+  tags: update
+- name: Install standard tools
+  package:
+    name: 
+      - screen
+      - dnf-utils
+      - net-tools
+      - tar
+      - bzip2
+      - nmap
+      - ntpstat
+      - bind-utils

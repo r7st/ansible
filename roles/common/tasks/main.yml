@@ -1,0 +1,22 @@
+---
+# tasks file for roles/common
+- name: Set hostname
+  hostname:
+    name: "{{ server_hostname }}"
+  tags: set_hostname
+- include: authorized_keys.yml
+  tags: authorized_keys
+- include: network_conf.yml
+  tags: network
+- include: firewalld_conf.yml
+  tags: firewall
+- include: standard_init.yml
+  tags: update
+- include: etc_skel.yml
+  tags: etc_skel
+- include: ntp_conf.yml
+  tags: ntp
+- include: disable_ipv6.yml
+  tags: disable_ipv6
+- include: zabbix_agent.yml
+  tags: zabbix_agent

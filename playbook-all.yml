@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: yes
+  collections: 
+    - devsec.hardening
+  roles: 
+    - role: common
+    - role: os_hardening
+      vars:
+        - os_auth_pw_max_age: 99999
+        - os_auth_lockout_time: 300
+      when: hardened
+    - role: ssh_hardening
+      vars:
+        - ssh_permit_root_login: 'without-password'
+        - sshd_authenticationmethods: 'publickey'
+        - sftp_enabled: true
+        - network_ipv6_enable: false
+      when: hardened
