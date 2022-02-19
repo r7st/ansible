@@ -21,9 +21,9 @@
     owner: root
     group: root
     mode: 0644 
-- name: Restart zabbix-agent
+  notify: Restart zabbix-agent
+- name: Enable zabbix-agent
   systemd:
     name: zabbix-agent
-    state: restarted
+    state: started
     enabled: yes
-
