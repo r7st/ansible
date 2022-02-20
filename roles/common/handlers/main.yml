@@ -2,6 +2,7 @@
 # handlers file for roles/common
 - name: Reboot Server
   reboot:
+  when: allow_reboot
 - name: Restart firewalld
   systemd:
     name: firewalld

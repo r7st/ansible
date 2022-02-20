@@ -11,7 +11,7 @@
 - include: firewalld_conf.yml
   tags: firewall
 - include: standard_init.yml
-  tags: update
+  tags: standard
 - include: etc_skel.yml
   tags: etc_skel
 - include: ntp_conf.yml
