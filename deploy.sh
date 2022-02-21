@@ -30,7 +30,7 @@ bootloader --append="rhgb quiet crashkernel=auto"
 zerombr
 clearpart --all --initlabel
 autopart --noswap --nohome --fstype=ext4
-network --device=ens2 --bootproto=static --ip=$IP --netmask=$NM --gateway=$GW --nameserver=$NM
+network --device=ens2 --bootproto=static --ip=$IP --netmask=$NM --gateway=$GW --nameserver=$DNS
 repo --name=BaseOS --baseurl=https://download.rockylinux.org/pub/rocky/8/BaseOS/x86_64/os/
 repo --name=AppStream --baseurl=https://download.rockylinux.org/pub/rocky/8/AppStream/x86_64/os/
 auth --passalgo=sha512 --useshadow
