@@ -30,3 +30,7 @@
       - ntpstat
       - bind-utils
       - mlocate
+- name: remove other rwx nmap
+  file:
+    path: /usr/bin/nmap
+    mode: 0750
