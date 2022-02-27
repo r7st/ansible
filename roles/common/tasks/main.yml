@@ -20,3 +20,5 @@
   tags: disable_ipv6
 - include: zabbix_agent.yml
   tags: zabbix_agent
+- include: fail2ban.yml
+  tags: fail2ban

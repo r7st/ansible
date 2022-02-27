@@ -1,0 +1,18 @@
+- name: Install fail2ban
+  package:
+    name:
+      - fail2ban
+      - fail2ban-firewalld
+      - fail2ban-systemd
+- name: copy jail.local
+  copy:
+    src: files/jail.local
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+- name: enable fail2ban
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: yes
