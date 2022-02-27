@@ -22,3 +22,5 @@
   tags: zabbix_agent
 - include: fail2ban.yml
   tags: fail2ban
+- include: resolved.yml
+  tags: cache_dns

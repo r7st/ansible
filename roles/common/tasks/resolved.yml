@@ -1,0 +1,5 @@
+- name: cache dns
+  systemd:
+    name: systemd-resolved
+    state: started
+    enabled: yes
