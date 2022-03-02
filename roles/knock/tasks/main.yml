@@ -1,0 +1,55 @@
+---
+# tasks file for roles/knock
+- name: check IP defined
+  assert:
+    that: IP is defined
+- name: check ssh knock vars
+  assert:
+    that:
+      - ssh_knock_hosts is defined
+      - ssh_knock_seq is defined
+      - t_ssh_knock_seq is defined
+  when: knock_ssh
+- name: check zabbix knock vars
+  assert:
+    that:
+      - zabbix_knock_hosts is defined
+      - zabbix_knock_seq is defined
+      - t_zabbix_knock_seq is defined
+  when: knock_zabbix
+- name: Install knockd
+  package:
+    name: knock-server
+- name: Copy knockd conf
+  template:
+    src: templates/knockd.conf.j2
+    dest: /etc/knockd.conf
+    owner: root
+    group: root
+    mode: 0640
+- name: Start knockd
+  systemd:
+    name: knockd
+    state: started
+- name: Knock ssh
+  shell: knock "{{ IP }}" {{ ssh_knock_seq }}
+  when: knock_ssh
+  delegate_to: "{{ item }}"
+  with_items: "{{ ssh_knock_hosts }}"
+- name: Knock zabbix
+  shell: knock "{{ IP }}" {{ zabbix_knock_seq }}
+  delegate_to: "{{ item }}"
+  with_items: "{{ zabbix_knock_hosts }}"
+  when: knock_zabbix
+- name: Stop knockd
+  systemd:
+    name: knockd
+    state: stopped
+- name: Remove knockd
+  package:
+    name: knock-server
+    state: absent
+- name: Clean up conf
+  file:
+    path: /etc/knockd.conf.rpmsave
+    state: absent

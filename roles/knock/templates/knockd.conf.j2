@@ -1,0 +1,12 @@
+[options]
+	UseSyslog
+[openSSH]
+        sequence    = {{ t_ssh_knock_seq }}
+        seq_timeout = 10
+        tcpflags    = syn
+	command     = /usr/bin/firewall-cmd --zone=drop --add-rich-rule='rule family="ipv4" source address="%IP%" port protocol="tcp" port="22" accept'
+[openZabbix]
+        sequence    = {{ t_zabbix_knock_seq }}
+        seq_timeout = 10
+        tcpflags    = syn
+        command     = /usr/bin/firewall-cmd --zone=drop --add-rich-rule='rule family="ipv4" source address="%IP%" port protocol="tcp" port="10050" accept'
