@@ -1,21 +1,7 @@
 ---
-# tasks file for roles/post
-- name: Copy audit rules
-  copy:
-    src: files/audit.rules
-    dest: /etc/audit/rules.d/audit.rules
-    owner: root
-    group: root
-    mode: 0600
-  register: auditd_rule_change
-- name: Remove deprecated parameters
-  lineinfile:
-    path: /etc/audit/auditd.conf
-    state: absent
-    regexp: '{{ item }}'
-  loop:
-    - '^disp_qos'
-    - '^dispatcher'
-- name: Restart auditd
-  command: /usr/sbin/service auditd reload
-  when: auditd_rule_change.changed
+- include: auditd.yml
+  tags: auditd
+- include: ipa.yml
+  tags: ipa
+- include: sudoers.yml
+  tags: sudoers

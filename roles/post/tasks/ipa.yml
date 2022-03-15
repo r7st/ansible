@@ -1,0 +1,30 @@
+- name: Install ipa client & dependencies
+  package:
+    name:
+      - ipa-client 
+      - oddjob 
+      - oddjob-mkhomedir 
+      - sssd
+      - nscd
+      - realmd
+      - samba-common-tools
+      - python3-pexpect
+- name: Check vars
+  assert:
+    that:
+      - ipa_dom is defined
+      - ipa_user is defined
+      - ipa_pass is defined
+- name: Join realm
+  ogratwicklcs.realmd_ipa_ad.realm_join: 
+    domain: '{{ ipa_dom }}'
+    state: present
+    username: '{{ ipa_user }}'
+    password: '{{ ipa_pass }}'
+- name: Restart sssd/sshd
+  systemd:
+    name: '{{ item }}'
+    state: restarted
+  loop:
+    - sssd
+    - sshd

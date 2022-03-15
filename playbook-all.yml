@@ -10,10 +10,16 @@
         - os_auth_pw_max_age: 99999
         - os_auth_lockout_time: 300
       when: hardened
+      tags: os_harden
     - role: ssh_hardening
       vars:
         - ssh_permit_root_login: 'without-password'
         - sshd_authenticationmethods: 'publickey'
         - sftp_enabled: true
         - network_ipv6_enable: false
+        - ssh_gssapi_support: true
       when: hardened
+      tags: ssh_harden
+    - role: post
+      when: post
+      tags: post

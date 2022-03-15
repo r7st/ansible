@@ -1,0 +1,7 @@
+- name: Copy sudoers
+  copy:
+    src: files/sudoers_ipa
+    dest: /etc/sudoers.d/sudoers_ipa
+    owner: root
+    group: root
+    mode: 0440
