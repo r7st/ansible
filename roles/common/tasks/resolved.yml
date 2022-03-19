@@ -3,6 +3,7 @@
     that:
       - DNS is defined
       - DNS2 is defined
+      - search_dom is defined
 - name: Cache DNS
   systemd:
     name: systemd-resolved
