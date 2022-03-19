@@ -1,6 +1,8 @@
 ---
 - include: auditd.yml
   tags: auditd
+- include: zabbix_agent.yml
+  tags: zabbix_agent
 - include: ipa.yml
   tags: ipa
 - include: sudoers.yml

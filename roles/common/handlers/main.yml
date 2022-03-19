@@ -12,3 +12,7 @@
     name: zabbix-agent
     state: restarted
     enabled: yes
+- name: Restart Network Manager
+  systemd:
+    name: NetworkManager
+    state: restarted

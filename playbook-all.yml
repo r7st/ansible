@@ -5,6 +5,7 @@
     - devsec.hardening
   roles: 
     - role: common
+      tags: common
     - role: os_hardening
       vars:
         - os_auth_pw_max_age: 99999

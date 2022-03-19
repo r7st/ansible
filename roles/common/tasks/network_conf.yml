@@ -27,3 +27,5 @@
     owner: root
     group: root
     mode: 0644
+  tags: add_eth0_config
+  notify: Restart Network Manager
