@@ -1,5 +1,25 @@
-- name: cache dns
+- name: Check vars
+  assert:
+    that:
+      - DNS is defined
+      - DNS2 is defined
+- name: Cache DNS
   systemd:
     name: systemd-resolved
     state: started
     enabled: yes
+- name: Copy resolved.conf 
+  template:
+    src: templates/resolved.conf.j2
+    dest: /etc/systemd/resolved.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart resolved
+- name: Create symlink
+  file:
+    state: link
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
+    force: yes
+  notify: Restart resolved

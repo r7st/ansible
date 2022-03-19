@@ -5,10 +5,9 @@ BOOTPROTO=none
 IPADDR={{ IP }}
 PREFIX=24
 GATEWAY={{ GW }}
-DNS1=127.0.0.53
-DNS2={{ DNS }}
+DNS1={{ DNS }}
 {% if DNS2 is defined %}
-DNS3={{ DNS2 }}
+DNS2={{ DNS2 }}
 {% endif %}
 DEFROUTE=yes
 IPV4_FAILURE_FATAL=no

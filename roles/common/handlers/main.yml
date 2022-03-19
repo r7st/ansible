@@ -16,3 +16,7 @@
   systemd:
     name: NetworkManager
     state: restarted
+- name: Restart resolved
+  systemd:
+    name: systemd-resolved
+    state: restarted
