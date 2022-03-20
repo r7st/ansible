@@ -1,0 +1,10 @@
+---
+# handlers file for roles/pre
+- name: Restart resolved
+  systemd:
+    name: systemd-resolved
+    state: restarted
+- name: Restart Network Manager
+  systemd:
+    name: NetworkManager
+    state: restarted

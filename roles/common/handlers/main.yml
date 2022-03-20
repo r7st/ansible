@@ -7,16 +7,3 @@
   systemd:
     name: firewalld
     state: reloaded
-- name: Restart zabbix-agent
-  systemd:
-    name: zabbix-agent
-    state: restarted
-    enabled: yes
-- name: Restart Network Manager
-  systemd:
-    name: NetworkManager
-    state: restarted
-- name: Restart resolved
-  systemd:
-    name: systemd-resolved
-    state: restarted

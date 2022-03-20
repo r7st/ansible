@@ -6,19 +6,13 @@
   tags: set_hostname
 - include: authorized_keys.yml
   tags: authorized_keys
-- include: network_conf.yml
-  tags: network
 - include: firewalld_conf.yml
   tags: firewall
 - include: standard_init.yml
   tags: standard
 - include: etc_skel.yml
   tags: etc_skel
-- include: ntp_conf.yml
-  tags: ntp
 - include: disable_ipv6.yml
   tags: disable_ipv6
 - include: fail2ban.yml
   tags: fail2ban
-- include: resolved.yml
-  tags: cache_dns

@@ -21,6 +21,8 @@
     state: present
     username: '{{ ipa_user }}'
     password: '{{ ipa_pass }}'
+  ignore_errors: true
+  register: realm_joined
 - name: Restart sssd/sshd
   systemd:
     name: '{{ item }}'
@@ -28,3 +30,4 @@
   loop:
     - sssd
     - sshd
+  when: realm_joined.changed

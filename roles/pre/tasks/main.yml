@@ -1,0 +1,8 @@
+---
+# tasks file for roles/pre
+- include: network_conf.yml
+  tags: network
+- include: ntp_conf.yml
+  tags: ntp
+- include: resolved.yml
+  tags: cache_dns

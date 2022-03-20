@@ -4,6 +4,9 @@
   collections: 
     - devsec.hardening
   roles: 
+    - role: pre
+      when: pre
+      tags: pre
     - role: common
       tags: common
     - role: os_hardening
