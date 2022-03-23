@@ -16,6 +16,13 @@
   loop:
     - '^disp_qos'
     - '^dispatcher'
+  register: auditd_rule_change
+- name: Set audit log rotation
+  lineinfile:
+    path: /etc/audit/auditd.conf
+    regexp: '^max_log_file_action'
+    line: 'max_log_file_action = rotate'
+  register: auditd_rule_change
 - name: Restart auditd
   command: /usr/sbin/service auditd reload
   when: auditd_rule_change.changed
