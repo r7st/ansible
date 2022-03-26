@@ -32,6 +32,7 @@
       - mlocate
       - wget
       - setroubleshoot-server
+      - setools-console
 - name: remove other rwx nmap
   file:
     path: /usr/bin/nmap
