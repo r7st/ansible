@@ -30,6 +30,8 @@
       - ntpstat
       - bind-utils
       - mlocate
+      - wget
+      - setroubleshoot-server
 - name: remove other rwx nmap
   file:
     path: /usr/bin/nmap

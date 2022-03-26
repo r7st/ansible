@@ -70,7 +70,8 @@
 -a never,exclude -F exe=/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator
 
 ## Ignore SELinux AVC records
--a always,exclude -F msgtype=AVC
+#-a always,exclude -F msgtype=AVC
+-a always,exclude -F msgtype=AVC -F success=yes
 
 ## Ignore current working directory records
 -a always,exclude -F msgtype=CWD
