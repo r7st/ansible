@@ -1,0 +1,49 @@
+
+module r7-zabbixagent 1.0;
+
+require {
+	type devlog_t;
+	type proc_kcore_t;
+	type zabbix_agent_t;
+	type initctl_t;
+	class fifo_file getattr;
+	class sock_file getattr;
+	class file getattr;
+}
+
+#============= zabbix_agent_t ==============
+allow zabbix_agent_t devlog_t:sock_file getattr;
+allow zabbix_agent_t initctl_t:fifo_file getattr;
+allow zabbix_agent_t proc_kcore_t:file getattr;
+
+require {
+	type sshd_t;
+	type zabbix_agent_t;
+	type rpm_exec_t;
+	type reserved_port_t;
+	class tcp_socket name_bind;
+	class file execute;
+}
+
+#============= sshd_t ==============
+allow sshd_t reserved_port_t:tcp_socket name_bind;
+
+#============= zabbix_agent_t ==============
+allow zabbix_agent_t rpm_exec_t:file execute;
+
+require {
+	type rpm_var_lib_t;
+	type rpm_exec_t;
+	type zabbix_agent_t;
+	class file { execute_no_trans map open };
+}
+
+#============= zabbix_agent_t ==============
+allow zabbix_agent_t rpm_exec_t:file execute_no_trans;
+
+#!!!! This avc can be allowed using the boolean 'domain_can_mmap_files'
+allow zabbix_agent_t rpm_exec_t:file map;
+allow zabbix_agent_t rpm_var_lib_t:file open;
+
+#!!!! This avc can be allowed using the boolean 'domain_can_mmap_files'
+allow zabbix_agent_t rpm_var_lib_t:file map;

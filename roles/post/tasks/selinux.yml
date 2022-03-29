@@ -1,0 +1,45 @@
+- name: Install dependencies
+  package:
+    name:
+      - setroubleshoot-server
+      - setools-console
+- name: Set permissive
+  selinux:
+    policy: targeted
+    state: permissive
+  register: set_enforced
+- name: Autolabel
+  file:
+    path: /.autorelabel
+    state: touch
+  when: set_enforced.changed
+- name: Force reboot
+  reboot:
+  when: set_enforced.changed
+- name: Copy zabbix module
+  copy:
+    src: files/r7-zabbixagent.te
+    dest: /tmp/r7-zabbixagent.te
+    owner: root
+    group: root
+    mode: 0600
+- name: Compile module
+  shell: checkmodule -M -m -o /tmp/r7-zabbixagent.mod /tmp/r7-zabbixagent.te
+- name: Build Policy
+  shell: semodule_package -o /tmp/r7-zabbixagent.pp -m /tmp/r7-zabbixagent.mod
+- name: Load module
+  shell: semodule -i /tmp/r7-zabbixagent.pp
+- name: Clean up module
+  file:
+    path: /tmp/{{ item }}
+    state: absent
+  loop:
+    - r7-zabbixagent.te
+    - r7-zabbixagent.mod
+    - r7-zabbixagent.pp
+- name: Ensure enforcing
+  selinux:
+    policy: targeted
+    state: enforcing
+  when: set_enforced.changed
+  notify: Reboot Server

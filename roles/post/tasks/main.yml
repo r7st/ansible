@@ -5,6 +5,8 @@
   tags: auditd
 - include: zabbix_agent.yml
   tags: zabbix_agent
+- include: selinux.yml
+  tags: enable_selinux
 - include: sudoers.yml
   tags: sudoers
 - include: ipa.yml
