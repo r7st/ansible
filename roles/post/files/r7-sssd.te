@@ -1,0 +1,10 @@
+module r7-sssd 1.0;
+
+require {
+	type systemd_resolved_var_run_t;
+	type sssd_t;
+	class dir read;
+}
+
+#============= sssd_t ==============
+allow sssd_t systemd_resolved_var_run_t:dir read;

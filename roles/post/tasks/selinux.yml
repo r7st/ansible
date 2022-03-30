@@ -1,3 +1,7 @@
+- name: Ensure modules are set
+  assert:
+    that:
+      - selinux_modules is defined
 - name: Install dependencies
   package:
     name:
@@ -16,27 +20,35 @@
 - name: Force reboot
   reboot:
   when: set_enforced.changed
-- name: Copy zabbix module
+- name: Copy modules
   copy:
-    src: files/r7-zabbixagent.te
-    dest: /tmp/r7-zabbixagent.te
+    src: files/{{ item }}.te
+    dest: /tmp/{{ item }}.te
     owner: root
     group: root
     mode: 0600
-- name: Compile module
-  shell: checkmodule -M -m -o /tmp/r7-zabbixagent.mod /tmp/r7-zabbixagent.te
-- name: Build Policy
-  shell: semodule_package -o /tmp/r7-zabbixagent.pp -m /tmp/r7-zabbixagent.mod
+  loop: '{{ selinux_modules }}'
+- name: Compile modules
+  shell: checkmodule -M -m -o /tmp/{{ item }}.mod /tmp/{{ item }}.te
+  loop: '{{ selinux_modules }}'
+- name: Build Policies
+  shell: semodule_package -o /tmp/{{ item }}.pp -m /tmp/{{ item }}.mod
+  loop: '{{ selinux_modules }}'
 - name: Load module
-  shell: semodule -i /tmp/r7-zabbixagent.pp
-- name: Clean up module
+  shell: semodule -i /tmp/{{ item }}.pp
+  loop: '{{ selinux_modules }}'
+- name: Clean up modules
+  find:
+    paths: /tmp/
+    recurse: no
+    patterns: ".*(pp|te|mod)$"
+    use_regex: true
+  register: clean_modules
+- name: Remove modules files
   file:
-    path: /tmp/{{ item }}
+    path: "{{ item.path }}"
     state: absent
-  loop:
-    - r7-zabbixagent.te
-    - r7-zabbixagent.mod
-    - r7-zabbixagent.pp
+  with_items: "{{ clean_modules.files }}"
 - name: Ensure enforcing
   selinux:
     policy: targeted
