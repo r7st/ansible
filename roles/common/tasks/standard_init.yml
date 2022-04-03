@@ -31,8 +31,8 @@
       - bind-utils
       - mlocate
       - wget
-      - setroubleshoot-server
-      - setools-console
+      - rsync
+      - python3-dnf-plugin-versionlock
 - name: remove other rwx nmap
   file:
     path: /usr/bin/nmap
