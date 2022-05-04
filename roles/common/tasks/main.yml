@@ -7,7 +7,7 @@
 - include: authorized_keys.yml
   tags: authorized_keys
 - include: firewalld_conf.yml
-  tags: firewall
+  tags: firewalld_config
 - include: standard_init.yml
   tags: standard
 - include: etc_skel.yml

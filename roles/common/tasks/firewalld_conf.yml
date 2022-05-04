@@ -1,26 +1,17 @@
 ---
-- name: Check vars
-  assert:
-    that:
-      - fw_ports is defined
-- name: Install firewalld
-  package: 
-    name: firewalld
-- name: Start firewalld
-  systemd:
-    name: firewalld
-    enabled: yes
-    state: started
-- name: Add FW Ports to DROP Zone
-  firewalld:
-    port: '{{ item }}'
-    permanent: yes
-    state: enabled
-    zone: drop
-  loop: '{{ fw_ports }}'
+- name: Copy firewalld conf
+  copy:
+    src: files/firewalld.conf
+    dest: /etc/firewalld/firewalld.conf
+    owner: root
+    group: root
+    mode: 0600
   notify: Restart firewalld
-- name: Default DROP zone
-  shell: firewall-cmd --set-default-zone drop
-  register: zone_check
-  changed_when: "'ZONE_ALREADY_SET' not in zone_check.stderr"
+- name: Copy drop zone conf
+  template:
+    src: templates/drop.xml.j2
+    dest: /etc/firewalld/zones/drop.xml
+    owner: root
+    group: root
+    mode: 0644
   notify: Restart firewalld
