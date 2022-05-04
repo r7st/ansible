@@ -1,6 +1,7 @@
 ---
 - name: Reboot for IPA
   reboot:
+  when: ipa
 - include: auditd.yml
   tags: auditd
 - include: zabbix_agent.yml
@@ -8,6 +9,8 @@
 - include: selinux.yml
   tags: enable_selinux
 - include: sudoers.yml
+  when: ipa
   tags: sudoers
 - include: ipa.yml
+  when: ipa
   tags: ipa
