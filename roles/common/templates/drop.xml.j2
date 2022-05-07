@@ -4,6 +4,16 @@
   <description>Unsolicited incoming network packets are dropped. Incoming packets that are related to outgoing network connections are accepted. Outgoing network connections are allowed.</description>
   <service name="ssh"/>
   <port port="10050" protocol="tcp"/>
+  {% if 'ntp' in svr_type %}
+  <service name="ntp"/>
+  {% endif %}
+  {% if 'webserver' in svr_type %}
+  <service name="http"/>
+  <service name="https"/>
+  {% endif %}
+  {% if 'dns' in svr_type %}
+  <service name="dns"/>
+  {% endif %}
   <icmp-block name="echo-request"/>
   <icmp-block-inversion/>
 </zone>
