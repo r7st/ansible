@@ -27,6 +27,7 @@
       - tar
       - bzip2
       - nmap
+      - tcpdump
       - ntpstat
       - bind-utils
       - mlocate
