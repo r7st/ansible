@@ -10,6 +10,8 @@
     - bashrc
     - bash_logout
     - hushlogin
+    - joerc
+    - screenrc
 - name: Root dotfiles
   copy:
     src: files/{{ item }}
@@ -22,3 +24,5 @@
     - bashrc
     - bash_logout
     - hushlogin
+    - joerc
+    - screenrc

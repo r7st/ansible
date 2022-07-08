@@ -22,6 +22,7 @@
   package:
     name: 
       - screen
+      - joe
       - dnf-utils
       - net-tools
       - tar
