@@ -1,0 +1,19 @@
+- name: Install postfix,mailx
+  package:
+    name: 
+      - postfix
+      - mailx
+
+- name: Configure postfix
+  copy:
+    src: files/main.cf
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start,enable postfix
+  systemd:
+    name: postfix
+    state: started
+    enabled: yes
