@@ -16,3 +16,5 @@
   tags: disable_ipv6
 - include: fail2ban.yml
   tags: fail2ban
+- include: postfix.yml
+  tags: postfix
